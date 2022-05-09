@@ -74,17 +74,24 @@ def compute_retrieval_cosine(dot_product: np.ndarray) -> Tuple[Dict[str, float],
     Returns:
         Retrieval metrics for that similarity.
     """
+    #len_dot_product = 457
     len_dot_product = len(dot_product)
+
+    #len(ranks) = 457
     ranks = np.empty(len_dot_product)
     top1 = np.empty(len_dot_product)
+
     # loop source embedding indices
     for index in range(len_dot_product):
         # get order of similarities to target embeddings
+        #for the 0th video, sort by which caption has highest similarity
         inds = np.argsort(dot_product[index])[::-1]
+
+        #inds is an array sorted by max similarity between video-text 
         # find where the correct embedding is ranked
-        where = np.where(inds == index)
-        rank = where[0][0]
-        ranks[index] = rank
+        where = np.where(inds == index) #find all the true captions of 0th video
+        rank = where[0][0] #find the first text caption that matches the video
+        ranks[index] = rank #ranks for this video 
         # save the top1 result as well
         top1[index] = inds[0]
     # compute retrieval metrics
@@ -92,7 +99,10 @@ def compute_retrieval_cosine(dot_product: np.ndarray) -> Tuple[Dict[str, float],
     r5 = len(np.where(ranks < 5)[0]) / len(ranks)
     r10 = len(np.where(ranks < 10)[0]) / len(ranks)
     r50 = len(np.where(ranks < 50)[0]) / len(ranks)
+
     medr = np.floor(np.median(ranks)) + 1
     meanr = ranks.mean() + 1
     report_dict = {"r1": r1, "r5": r5, "r10": r10, "r50": r50, "medr": medr, "meanr": meanr, "sum": r1 + r5 + r50}
     return report_dict, top1, ranks
+
+#ratio between number of frames assigned the correct step label and the total number of frames

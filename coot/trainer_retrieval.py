@@ -22,6 +22,7 @@ from coot.dataset_retrieval import RetrievalDataBatchTuple
 from coot.loss_fn import ContrastiveLoss, CycleConsistencyLoss, LossesConst
 from nntrainer import lr_scheduler, optimization, retrieval, trainer_base
 
+th.cuda.empty_cache()
 
 class RetrievalTrainer(trainer_base.BaseTrainer):
     """

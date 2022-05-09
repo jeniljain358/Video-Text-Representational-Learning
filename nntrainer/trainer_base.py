@@ -142,27 +142,29 @@ class BaseTrainer:
                 "When given filepath with load_model, --load_epoch must not be set.")
             self.load = True
         # automatically find best epoch otherwise
-        elif len(ep_nums) > 0:
-            if load_epoch:
-                # load given epoch
-                assert not load_best, "Load_epoch and load_best cannot be set at the same time."
-                self.load_ep = load_epoch
-            elif load_best:
-                # load best epoch
-                self.logger.info("Load best checkpoint...")
-                best_ep = self.exp.find_best_epoch()
-                if best_ep == -1:
-                    # no validation done yet, load last
-                    self.load_ep = ep_nums[-1]
-                else:
-                    self.load_ep = best_ep
-                self.logger.info(f"Best ckpt to load: {self.load_ep}")
-                self.load = True
-            else:
-                # load last epoch
-                self.load_ep = ep_nums[-1]
-                self.logger.info(f"Last ckpt to load: {self.load_ep}")
-                self.load = True
+        #elif len(ep_nums) > 0:
+        # elif False:
+
+        #     if load_epoch:
+        #         # load given epoch
+        #         assert not load_best, "Load_epoch and load_best cannot be set at the same time."
+        #         self.load_ep = load_epoch
+        #     elif load_best:
+        #         # load best epoch
+        #         self.logger.info("Load best checkpoint...")
+        #         best_ep = self.exp.find_best_epoch()
+        #         if best_ep == -1:
+        #             # no validation done yet, load last
+        #             self.load_ep = ep_nums[-1]
+        #         else:
+        #             self.load_ep = best_ep
+        #         self.logger.info(f"Best ckpt to load: {self.load_ep}")
+        #         self.load = True
+        #     else:
+        #         # load last epoch
+        #         self.load_ep = ep_nums[-1]
+        #         self.logger.info(f"Last ckpt to load: {self.load_ep}")
+        #         self.load = True
         else:
             self.logger.info("No checkpoints found, starting from scratch.")
 
@@ -359,7 +361,8 @@ class BaseTrainer:
                 f"Error: Loading epoch {self.load_ep} but already weights have been loaded. If you load weights for "
                 f"warmstarting, you cannot run if the experiments has already saved checkpoints. Change the run name "
                 f"or use --reset to delete the experiment run.")
-            if self.load_model:
+            #if self.load_model:
+            if True:    
                 # load model from file. this would start training from epoch 0, but is usually only used for validation.
                 self.logger.info(f"Loading model from checkpoint file {self.load_model}")
                 model_state = th.load(str(self.load_model))

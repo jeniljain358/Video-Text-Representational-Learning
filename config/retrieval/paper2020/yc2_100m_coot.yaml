@@ -14,7 +14,8 @@ train:
         weight_low_internal: 1.0
         weight_context: 1.0
         weight_context_internal: 0.0        
-    loss_cycle_cons: 0.001
+    # loss_cycle_cons: 0.001
+    loss_cycle_cons: 0
     clip_gradient: -1 # Deactivated by default since it takes ~200ms every train step.
 # ---------- Validation ----------
 val:
@@ -38,7 +39,7 @@ dataset_train:
     vid_feat_name: "video_feat_100m"
     vid_feat_source: "h5"
     vid_feat_dim: 512
-    text_feat_name: "text_feat_youcook2_meta_all_transformers_bert-base-uncased_-2,-1"
+    text_feat_name: "text_feat_youcook2"
     # text_feat_name: "text_feat_again"
     # text_feat_name: "text_feat_default_new"
     # text_feat_name: "text_feat_default"

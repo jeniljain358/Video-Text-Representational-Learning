@@ -15,6 +15,9 @@ class LossesConst(typext.ConstantHolder):
     CONTRASTIVE = "contrastive"
     CROSSENTROPY = "crossentropy"
 
+def drop_dtw_loss(X, Z):
+    
+    return
 
 def cosine_sim(visual_emb: th.Tensor, text_emb: th.Tensor) -> th.Tensor:
     """
@@ -183,9 +186,7 @@ class CycleConsistencyLoss(nn.Module):
 
         # calculate loss sentences to clips
         sent_clip_loss = None
-        if self.compute_half_cycles:
-            sent_clip_loss = self.get_total_loss(sent_emb, sent_clip_nn, sent_mask, sent_lens, sent_max_len, sent_alpha,
-                                                 sent_alpha_raw)
+        # Used to e.g. calculate distance between all source and all target
 
         # go from those new clips back to sentences
         sent_sent_nn, sent_beta, sent_beta_raw = self.get_soft_nn(sent_clip_nn, sent_mask, sent_emb, sent_mask)
